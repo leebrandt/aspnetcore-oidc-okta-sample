@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AspnetOkta
 {
@@ -36,8 +37,6 @@ namespace AspnetOkta
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -68,7 +67,11 @@ namespace AspnetOkta
               ClientId = "ZKiRtUGt5d87UMBQTxVw",
               ClientSecret = "5WKvIqD1FrbsC-vBMEl-rqLK-zK-Men3rwSsERAf",
               GetClaimsFromUserInfoEndpoint = true,
-              SaveTokens = true
+              SaveTokens = true,
+              TokenValidationParameters = new TokenValidationParameters
+              {
+                ValidateIssuer = true
+              }
             });
 
             app.UseMvc(routes =>

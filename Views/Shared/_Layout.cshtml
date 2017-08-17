@@ -1,3 +1,8 @@
+@using System.Security.Claims;
+@{
+    ViewBag.Title = "Manage Profile";
+    var claimsIdentity = (ClaimsIdentity)Context.User.Identity;
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +38,19 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Secure">Secure Page</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    var username = User.Claims.FirstOrDefault(x=>x.Type == "name").Value;
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <p class="navbar-text">Hello, <b>@username</b></p>
+                        </li>
+                        <li><a href="#" class="logout-kickoff">Logout</a></li>
+                    </ul>
+                }
                 </ul>
             </div>
         </div>
@@ -65,7 +83,27 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.logout-kickoff').click(function () {
+                $.ajax({
+                    url : 'https://dev-613050.oktapreview.com/api/v1/sessions/me',
+                    type: 'DELETE',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        console.log('success!');
+                        window.location.href="/home/logout";
+                        //$('.logout-complete').submit();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error(errorThrown);
+                    }
+                });
+            });
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

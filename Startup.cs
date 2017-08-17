@@ -70,13 +70,32 @@ namespace AspnetOkta
       {
         ClientId = "ZKiRtUGt5d87UMBQTxVw",
         ClientSecret = "5WKvIqD1FrbsC-vBMEl-rqLK-zK-Men3rwSsERAf",
-        Authority = "https://dev-613050.oktapreview.com",
+        Authority = "https://dev-613050.oktapreview.com/oauth2/ausaw1du8sQJUCGIk0h7",
         ResponseType = OpenIdConnectResponseType.CodeIdToken,
         GetClaimsFromUserInfoEndpoint = true,
+        SaveTokens = true,
         TokenValidationParameters = new TokenValidationParameters
         {
           ValidateIssuer = true
-        }
+        },
+        // Events = new OpenIdConnectEvents
+        // {
+        //   OnRedirectToIdentityProviderForSignOut = ctx => 
+        //   {
+        //     Console.WriteLine("I'm logging out, yo!");
+        //     var idTokenHint = ctx.HttpContext.User.FindFirst("id_token");
+        //     if (idTokenHint != null)
+        //     {
+        //       Console.WriteLine(idTokenHint.Value);
+        //       ctx.ProtocolMessage.IdTokenHint = idTokenHint.Value;
+        //     }
+        //     else
+        //     {
+        //       Console.WriteLine("Bummer! No id_token, bro!");
+        //     }
+        //     return Task.FromResult(0);
+        //   }
+        // }
       });
 
       app.UseMvc(routes =>

@@ -77,25 +77,7 @@ namespace AspnetOkta
         TokenValidationParameters = new TokenValidationParameters
         {
           ValidateIssuer = true
-        },
-        // Events = new OpenIdConnectEvents
-        // {
-        //   OnRedirectToIdentityProviderForSignOut = ctx => 
-        //   {
-        //     Console.WriteLine("I'm logging out, yo!");
-        //     var idTokenHint = ctx.HttpContext.User.FindFirst("id_token");
-        //     if (idTokenHint != null)
-        //     {
-        //       Console.WriteLine(idTokenHint.Value);
-        //       ctx.ProtocolMessage.IdTokenHint = idTokenHint.Value;
-        //     }
-        //     else
-        //     {
-        //       Console.WriteLine("Bummer! No id_token, bro!");
-        //     }
-        //     return Task.FromResult(0);
-        //   }
-        // }
+        }
       });
 
       app.UseMvc(routes =>

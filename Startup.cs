@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace AspnetOkta
 {
@@ -34,11 +35,12 @@ namespace AspnetOkta
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      // Add framework services.
-      services.AddMvc();
       services.AddAuthentication(sharedOptions =>
           sharedOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme
-      );
+        );
+      // Add framework services.
+      services.AddMvc();
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

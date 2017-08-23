@@ -17,5 +17,20 @@
       <strong>Favorite Color:</strong>
       @Model.FavoriteColor
     </li>
+    <li>
+      <strong>Favorites:</strong>
+      @foreach(var fave in Model.CustomData.Favorites){
+          <ul>
+            <li>
+              <strong>Title</strong>
+              @fave.Title
+            </li>
+            <li>
+              <strong>Type</strong>
+              @fave.EntityType
+            </li>
+          </ul>
+      }
+    </li>
   </ul>
 }

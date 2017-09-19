@@ -18,6 +18,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace AspnetOkta.Controllers
 {
+  [Authorize]
   public class UserController : Controller
   {
     private OktaClient client;
@@ -39,7 +40,7 @@ namespace AspnetOkta.Controllers
       {
         var userId = idClaim.Value;
         var user = await client.Users.GetUserAsync(userId);
-        var profile = Map.ToMyUser(user);
+        var profile = await Map.ToMyUser(user);
         return View(profile);
       }
       else

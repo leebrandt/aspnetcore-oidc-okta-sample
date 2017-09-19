@@ -32,5 +32,20 @@
           </ul>
       }
     </li>
+    <li>
+      <strong>Groups:</strong>
+      @foreach(var group in Model.Groups){
+          <ul>
+            <li>
+              <strong>Name</strong>
+              @group.Name
+            </li>
+            <li>
+              <strong>Descripiotn</strong>
+              @group.Description
+            </li>
+          </ul>
+      }
+    </li>
   </ul>
 }

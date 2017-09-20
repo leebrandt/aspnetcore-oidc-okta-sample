@@ -48,41 +48,5 @@ namespace AspnetOkta.Controllers
         return View();
       }
     }
-
-    public async Task<IActionResult> Update()
-    {
-      var customData = new
-      {
-        Favorites = new[]{
-          new{
-            EntityType = "Specimen",
-            EntityGuid = "d2852531-8764-11e7-8ed2-e540177b168b",
-            Title = "Specimen #559",
-            Headline = "Parafin Tissue | Unstained Slide",
-            MoreInformation = "Added on 8/22/2017, 7:40:20 PM",
-            RouteName = "Specimen View"
-          }
-        }
-      };
-      var idClaim = User.FindFirst(x => x.Type == @"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
-      if (idClaim != null)
-      {
-        var userId = idClaim.Value;
-        var user = await client.Users.GetUserAsync(userId);
-        user.Profile["custom_data"] = JsonConvert.SerializeObject(
-          customData,
-          new JsonSerializerSettings
-          {
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
-          });
-        await user.UpdateAsync();
-        var profile = Map.ToMyUser(user);
-        return View("Index", profile);
-      }
-      else
-      {
-        return View("Index");
-      }
-    }
   }
 }
